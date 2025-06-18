@@ -10,11 +10,12 @@ The pipeline ingests data from the [Dune Analytics API](https://dune.com/docs/ap
 
 The pipeline follows the [Medallion Architecture](https://www.databricks.com/glossary/medallion-architecture):
 
+```plaintext
 data/
-├── bronze/ # Raw Dune API responses
-├── silver/ # Cleaned & normalized datasets
-└── gold/ # Business metrics (e.g. top traders, token trends)
-
+├── bronze/  # Raw Dune API responses
+├── silver/  # Cleaned & normalized datasets
+└── gold/    # Business metrics (e.g., top traders, token trends)
+```
 
 
 ### Tools Used
