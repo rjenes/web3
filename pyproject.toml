@@ -1,0 +1,44 @@
+[tool.black]
+line-length = 120
+
+[tool.ruff]
+line-length = 120
+extend-select = ["E", "F", "B", "I"]  # E: pycodestyle, F: pyflakes, B: bugbear, I: isort
+
+
+[tool.isort]
+profile="black"
+
+[tool.poetry]
+name = "web3_learnings"
+version = "0.1.0"
+description = "Web3 small project to ingest data from DuneAPI"
+authors = ["Ricardo Enes <Ricardo.Enes@gmail.com>"]
+readme = "README.md"
+packages = [
+    {include = "notebooks"}
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-dotenv = "^1.0.0"
+dune-client = ">=1.7.9"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "4.0.1"
+flake8-black = "0.2.4"
+isort = "5.10.1"
+flake8-builtins = "1.5.3"
+flake8-bugbear = "22.1.11"
+flake8-isort = "4.1.1"
+flake8-comprehensions = "3.8.0"
+flake8-docstrings = "1.6.0"
+flake8-eradicate = "1.2.0"
+flake8-quotes = "3.3.1"
+flake8-mutable = "1.2.0"
+flake8-cognitive-complexity = "0.1.0"
+flake8-expression-complexity = "0.0.9"
+pyyaml = "^6.0"
+black = "^23.12.1"
+ruff = "^0.12.0"
+pre-commit = "^4.2.0"
