@@ -7,4 +7,4 @@ load_dotenv()
 
 
 class DuneAuthenticationParameters:
-    API_KEY = os.getenv("API_KEY")
+    DUNE_API_KEY = os.getenv("DUNE_API_KEY")

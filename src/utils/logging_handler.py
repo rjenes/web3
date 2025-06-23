@@ -1,30 +1,29 @@
-import logging
+from __future__ import annotations
 
-FORMATTER = logging.Formatter("%(asctime)s — %(name)s — %(levelname)s — %(message)s")
+import inspect
+from logging import DEBUG, INFO, Formatter, Logger, StreamHandler, getLogger
+from sys import stdout
 
 
-class LoggingHandler(object):
-    """Handle the logging of the project."""
+def get_logger(name: str | None = None) -> Logger:
+    """Return a stream logger.
 
-    def __init__(self, class_name: str):
-        """Construct a LoggingHandler instance.
+    Args:
+        name (str): name for logger, defaults to __name__ of caller.
 
-        Args:
-            class_name: name of the class to be indicated in the logs.
-        """
-        self._logger: logging.Logger = logging.getLogger(class_name)
-        self._logger.setLevel(logging.DEBUG)
-        lsh = logging.StreamHandler()
-        lsh.setLevel(logging.DEBUG)
-        lsh.setFormatter(FORMATTER)
-        if not self._logger.hasHandlers():
-            # avoid keep adding handlers and therefore duplicate messages
-            self._logger.addHandler(lsh)
+    Returns:
+        Logger: Logger object with StreamHandler.
+    """
+    name = name or inspect.getmodule(inspect.stack()[1].frame).__name__
+    logger = getLogger(name)
+    logger.setLevel(DEBUG)
 
-    def get_logger(self) -> logging.Logger:
-        """Get the _logger instance variable.
+    handler = StreamHandler(stdout)
+    handler.setLevel(INFO)
+    handler.setFormatter(Formatter("[%(asctime)s][%(levelname)s] | %(message)s"))
 
-        Returns:
-            logging.Logger: the logger object.
-        """
-        return self._logger
+    if logger.hasHandlers():
+        logger.handlers.clear()
+    logger.addHandler(handler)
+
+    return logger

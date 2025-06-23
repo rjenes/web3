@@ -8,6 +8,6 @@ class DataClientInterface(ABC):
         pass
 
     @abstractmethod
-    def create_query(self, **kwargs):
+    def execute_query(self, **kwargs):
         """Create a Query"""
         pass

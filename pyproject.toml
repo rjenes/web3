@@ -1,13 +1,8 @@
-[tool.black]
-line-length = 120
-
 [tool.ruff]
 line-length = 120
-extend-select = ["E", "F", "B", "I"]  # E: pycodestyle, F: pyflakes, B: bugbear, I: isort
 
-
-[tool.isort]
-profile="black"
+[tool.ruff.lint]
+extend-select = ["E", "F", "B", "I"]
 
 [tool.poetry]
 name = "web3_learnings"

@@ -3,14 +3,13 @@ from abc import ABC
 from typing import Optional
 
 import requests
-from dune_client.client import DuneClient as OfficialDuneClient
 
 from core.definitions import DuneAllowedQueryTypes
 from src.client.exceptions import QueryTypeError
 from src.client.interface import DataClientInterface
-from src.utils.logging_handler import LoggingHandler
+from src.utils.logging_handler import get_logger
 
-logger = LoggingHandler.get_logger(__name__)
+LOGGER = get_logger(__name__)
 
 
 class DuneClient(DataClientInterface, ABC):
@@ -18,9 +17,17 @@ class DuneClient(DataClientInterface, ABC):
         self.api_key = api_key or os.getenv("DUNE_API_KEY")
         if not self.api_key:
             raise ValueError("DUNE_API_KEY not set in environment or as argument.")
-        self.client = OfficialDuneClient(self.api_key)
+        self.client = DataClientInterface(self.api_key)
 
-    def fetch_data(self, query_id, query_type="non_paginated", params=None, batch_size=None, limit=None, offset=None):
+    def fetch_data(
+        self,
+        query_id,
+        query_type="non_paginated",
+        params=None,
+        batch_size=None,
+        limit=None,
+        offset=None,
+    ):
         if query_type not in DuneAllowedQueryTypes:
             raise QueryTypeError(f"Query Type '{query_type}' is not supported!")
 
@@ -35,7 +42,9 @@ class DuneClient(DataClientInterface, ABC):
 
     def _run_paginated_query(self, query_id, params=None, limit=1000, offset=0):
         # Call the official SDK paginated fetch
-        return self.client.get_execution_results(query_id, params or {}, limit=limit, offset=offset)
+        return self.client.get_execution_results(
+            query_id, params or {}, limit=limit, offset=offset
+        )
 
     def execute_query(
         self,

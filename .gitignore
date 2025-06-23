@@ -1,2 +1,6 @@
 # Environment variables
 .env
+Dockerfile
+.pre-commit-config.yaml
+poetry.lock
+pyproject.toml
